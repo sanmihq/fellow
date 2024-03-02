@@ -1,5 +1,7 @@
+"use client";
 import Link from "next/link";
 import { Button } from "@nextui-org/react";
+import { usePathname } from "next/navigation";
 
 type Menu = {
   name: string;
@@ -9,6 +11,7 @@ type Menu = {
 };
 
 export default function RootHeader() {
+  const pathname = usePathname();
   const menu: Menu[] = [
     {
       name: "Create account",
@@ -24,24 +27,26 @@ export default function RootHeader() {
     },
   ];
   return (
-    <header>
-      <nav className="flex items-center justify-between px-10 py-4">
-        <span>Fellow</span>
-        <div className="flex items-center gap-4">
-          {menu.map((item, index) => (
-            <Button
-              key={index}
-              as={Link}
-              href={item.path}
-              size="sm"
-              color={item.color}
-              variant={item.variant}
-            >
-              {item.name}
-            </Button>
-          ))}
-        </div>
-      </nav>
-    </header>
+    pathname === "/" && (
+      <header>
+        <nav className="flex items-center justify-between px-10 py-4">
+          <span>Fellow</span>
+          <div className="flex items-center gap-4">
+            {menu.map((item, index) => (
+              <Button
+                key={index}
+                as={Link}
+                href={item.path}
+                size="sm"
+                color={item.color}
+                variant={item.variant}
+              >
+                {item.name}
+              </Button>
+            ))}
+          </div>
+        </nav>
+      </header>
+    )
   );
 }
